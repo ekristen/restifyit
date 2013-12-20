@@ -10,8 +10,8 @@ var middleware = require('./middleware');
 
 // Create the RESTful Server
 var server = restify.createServer({
-	name: config.api.name || 'restify_framework',
-	version: config.api.version || '0.0.1',
+	name: config.api.name || 'restifyit',
+	version: config.api.version || '1.0.0',
 	key: config.ssl.key || null,
 	cert: config.ssl.cert || null,
 	passphrase: config.ssl.passphrase || null

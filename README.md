@@ -1,9 +1,6 @@
 # Overview
 
-The purpose of this API framework is to provide a rapid development capability for API based services. It is a RESTful API service, with built in HTTPS capability, API versioning, authentication using HTTP Signature.
-
-This application is designed to run on any server that supports Node.JS but is also designed to be deployed into a CloudFoundry environment. In server.js you will see VCAP_SERVICES (that is CloudFoundry).
-
+The purpose of this API framework is to provide a rapid development capability for API based services. It is a RESTful API service, with built in HTTPS capability, API versioning, authentication using HTTP Signature. Its also designed to be self-documenting, this functionality is not 100% there yet, but it is being worked on.
 
 # Installation
 1. git clone URL_TO_REPO
