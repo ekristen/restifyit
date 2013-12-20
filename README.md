@@ -1,13 +1,11 @@
 # Overview
-
-The purpose of this API framework is to provide a rapid development capability for API based services. It is a RESTful API service, with built in HTTPS capability, API versioning, authentication using HTTP Signature. Its also designed to be self-documenting, this functionality is not 100% there yet, but it is being worked on.
+The purpose of this API framework is to provide a rapid development capability for API based services. It is a RESTful API service, with built in HTTPS capability, API versioning, authentication using HTTP Signature. Its also designed to be self-documenting, this functionality is not 100% there yet, but it is being worked on. 
 
 # Installation
 1. git clone URL_TO_REPO
-2. cd api-framework
-3. cp config.js.defaults config.js
-4. npm install
-5. npm start (for development `npm test`)
+2. cd restify
+3. npm install
+4. node server.js
 
 # Quick Start
 From the root directory, run `node scripts/init_database.js`, then `node scripts/create_user.js`, save the private key to key.pem to the root directory, and edit the scripts/test_api_call.js and put the keyId on line 30. The API service runs by HTTP as default for testing, easily switching to HTTPS. Then start up the server `node server.js`, then in another terminal, `node scripts/test_api_call.js`, you should see {"auth": "success"}, if not check the console output of the server.
@@ -19,43 +17,23 @@ From the root directory, run `node scripts/init_database.js`, then `node scripts
 * Crypto
 * Winston (for logging)
 
+# Endpoints
+Look at endpoints/default.js for examples. Endpoints are loaded automatically when placed in the endpoints directory properly. 
+
+There is an Endpoint function that should be used when defining endpoints, its purpose is to validation checking on the Endpoint configuration, this is still a work in progress.
+
+See: lib/endpoint.js, endpoints/default.js
 
 # Built-In Framework API Endpoints
 
-These are built-in endpoints that come with the framework.
-
-## `/user POST` - Creates New User Account
-
-* __Returns__ - (Object) Object contains user's email address, keyId, and privateKey
-* __Caveats__ - The privateKey is not stored on the server, if they don't retrieve it, it will have to be regenerated
-
-## `/user/:id GET` - Gets User Account
-
-* __Returns__ - (Object) Object contains user's email address, keyId, and publicKey
-
-## `/user/:id PUT` - Updates User Account
-
-* __Returns__ - (Object) Object contains user's email address, keyId, and publicKey, and any fields that were updated (except password)
-
-## `/user/:id DELETE` - Deletes User Account
-
-* __Returns__ - (Object) Object contains user's email address
-
-## `/test GET` - Test Connection (no authentication require)
-
-* __Returns__ - (Object) If successful a message stating the connection was successful, otherwise an error.
-
-## `/test/db GET` - Test Connection to Database (no authentication required)
-
-* __Returns__ - (Object) If successful a message stating the connection was successful, otherwise an error.
+WIP
 
 # Built-In Middleware
 
+* Auth Middleware using HTTP Signature
+
 ## Auth Middleware
 An Authentication middleware comes with the framework and is designed to work with the SQLite3 auth database and HTTP Signature to provide authentication for users and endpoints.
-
-# Custom API Endpoints
-_Place user defined API endpoint documentation here_
 
 
 # Client Authentication
