@@ -1,5 +1,5 @@
 {
-	"name": "license_api",
+	"name": "restifyit",
 	"version": "1.0.0",
 	"dependencies": {
 		"restify": "*",
@@ -9,7 +9,7 @@
 		"connect": "2.7.9",
 		"geoip-lite": "1.0.10",
 		"sqlite3": "*",
-		"walk": "*"
+		"pem": "*"
 	},
 	"devDependencies" : {
 		"nodemon": "0.7.8",
@@ -17,8 +17,7 @@
 		"assert": "0.4.9"
 	},
 	"scripts": {
-		"start": "node server.js",
-		"test": "./node_modules/nodemon/nodemon.js server.js"
+		"start": "node server.js"
 	},
 	"engines": {
 		"node": "<=0.8.22"

@@ -5,3 +5,5 @@ data
 config.js
 config/runtime.json
 config/*
+*.pem
+*.key

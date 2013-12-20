@@ -4,8 +4,6 @@ var httpSignature = require('http-signature');
 var winston = require('winston');
 var sqlite3 = require('sqlite3');
 
-var db = new sqlite3.Database(config.database)
-
 var logger = new (winston.Logger)({
 	transports: [
 		new (winston.transports.Console)({colorize: true, timestamp: true})
@@ -15,8 +13,9 @@ var logger = new (winston.Logger)({
 
 function authenticateUser(options) {
 	function authUser(req, res, next) {
-		// Do not require authentication on root
+		var db = new sqlite3.Database(config.database)
 
+		// Do not require authentication on root
 		if (req.url == '/') return next();
 		if (typeof(options.exemptions) != 'undefined') {
 			for (var i=0; i<options.exemptions.length; i++) {
@@ -38,24 +37,28 @@ function authenticateUser(options) {
 		}
 
 //		(function(req, res, next) {
-			db.run("SELECT public_key FROM users WHERE username = '" + req.username + "'", function(err, results) {
+			db.get("SELECT publicKey FROM keys WHERE keyId = '" + req.username + "'", function(err, result) {
 				if (err) {
 					logger.log('error', 'MySQL Error:', err);
 					return next(err);
 				}
 
-				if (results.length > 0) {
-					result = results[0];
-					if (httpSignature.verifySignature(req.authorization.signature, result.public_key)) {
+				if (typeof(result) != 'undefined') {
+					if (httpSignature.verifySignature(req.authorization.signature, result.publicKey)) {
 						logger.log('info', 'Sucessfully authenticated user');
 						req.user = req.username;
+						db.close();
 						return next();
 					}
 					else {
+						db.close();
+						logger.log('debug', 'Unable to validate signature');
 						return next(new restify.NotAuthorizedError('Unable to validate signature'));
 					}
 				}
 				else {
+					db.close();
+					logger.log('debug', 'Unable to authenticate user');
 					return next(new restify.NotAuthorizedError('Unable to authenticate the user'));
 				}
 			});

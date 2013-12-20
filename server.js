@@ -104,7 +104,6 @@ server.on('uncaughtException', function(req, res, route, error) {
 
 var auth_exemptions = Array();
 
-// Load all of the endpoints
 Object.keys(endpoints).forEach(function (c) {
 	var ends = endpoints[c].endpoints;
 	for (var i = 0; i < ends.length; i++) {
@@ -113,6 +112,17 @@ Object.keys(endpoints).forEach(function (c) {
 		if (endpoint.auth == false) {
 			auth_exemptions.push(endpoint.path);
 		}
+	}
+});
+
+// Authenticate all requests
+server.use(middleware.auth({exemptions: auth_exemptions}));
+
+// Load all of the endpoints
+Object.keys(endpoints).forEach(function (c) {
+	var ends = endpoints[c].endpoints;
+	for (var i = 0; i < ends.length; i++) {
+		var endpoint = ends[i];
 
 		if (endpoint.method == 'GET' && typeof(endpoint.fn) != 'Function') {
 			server.get({path: endpoint.path, version: endpoint.version}, endpoint.fn);
@@ -131,9 +141,6 @@ Object.keys(endpoints).forEach(function (c) {
 		}
 	}
 });
-
-// Authenticate all requests
-server.use(middleware.auth({exemptions: auth_exemptions}));
 
 // Start Listening for calls
 server.listen(config.api.port, function() {

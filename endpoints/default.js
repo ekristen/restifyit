@@ -24,6 +24,17 @@ exports = module.exports = {
 				res.send({'name': 'testing'});
 				return next();
 			}
+		}),
+		new Endpoint({
+			name: 'Auth Testing Endpoint',
+			description: 'Auth Testing Endpoint',
+			path: '/auth',
+			auth: true,
+			method: 'GET',
+			fn: function (req, res, next) {
+				res.send({'auth': 'success'});
+				return next();
+			}
 		})
 	]
 }
