@@ -12,6 +12,8 @@ This application is designed to run on any server that supports Node.JS but is a
 4. npm install
 5. npm start (for development `npm test`)
 
+# Quick Start
+From the root directory, run `node scripts/init_database.js`, then `node scripts/create_user.js`, save the private key to key.pem to the root directory, and edit the scripts/test_api_call.js and put the keyId on line 30. The API service runs by HTTP as default for testing, easily switching to HTTPS. Then start up the server `node server.js`, then in another terminal, `node scripts/test_api_call.js`, you should see {"auth": "success"}, if not check the console output of the server.
 
 # Dependencies
 * Restify
