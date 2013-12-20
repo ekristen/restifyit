@@ -3,3 +3,5 @@ ssl
 node_modules
 data
 config.js
+config/runtime.json
+config/*
